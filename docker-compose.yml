@@ -1,0 +1,16 @@
+version: '3'
+services:
+  mobilamoldova.ro:
+    build: .
+    image: izdrail/mobilamoldova.ro:latest
+    container_name: mobilamoldova.ro
+    restart: always
+    ports:
+      - "1500:1500"
+      - "1501:1501"
+    volumes:
+      - ./backend:/home/backend
+      - ./frontend:/home/frontend
+    environment:
+      - CLOUDFLARE_ACCOUNT_ID=e2fa0631e7c2fafc79e68a70a5968569
+      - CLOUDFLARE_API_KEY=av76jm154SuiQ8wu_4Nm_5tjQRjTB-u2RRJZ_nsS
