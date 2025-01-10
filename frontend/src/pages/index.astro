@@ -5,7 +5,7 @@ import '../../assets/scss/astro-ecommerce.scss';
 import CardCategory from '../components/products/cardCategory';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
-import TestimonialsFade from '../components/promo/testimonialsFade';
+
 import PromoSectionLarge from '../components/promo/promoSectionLarge';
 ---
 
@@ -13,7 +13,7 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
 	<main>
     <Navbar />
     <PromoSectionLarge 
-      title={"Mobila la comanda Moldova"}
+      title={"Mobila la comanda Barlad"}
       full_description={data.products[0].full_description}  
       pageHeaderBgImg={"../images/mobila-bg.webp"}
       pageHeaderMinVh="95vh"
@@ -24,7 +24,7 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
           Mobilă la comandă la preț de fabrică
         </h3>
         <p class="text-dark font-weight-bold" >
-          Fabrică de mobilă la comandă în Barlad, vinde din stoc sau la comandă, mobilă bucătărie, mobilă dormitor, mobilă living, paturi tapițate și canapele.
+          Fabrică de mobilă la comandă în <b>Barlad</b>, vinde din stoc sau la comandă, mobilă bucătărie, mobilă dormitor, mobilă living, paturi tapițate și canapele.
         </p>
       </div>  
       <div class="row mb-5">
@@ -49,7 +49,6 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments)}
     gtag('js', new Date());
-  
     gtag('config', 'G-YFZYSJ9QJM');
   </script>
 </Layout>

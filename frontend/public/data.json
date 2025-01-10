@@ -31,7 +31,7 @@
       "title": "Basic Starter Pack",
       "price": 399,
       "description": "That’s the main thing people are controlled by! Thoughts- their perception of themselves!",
-      "full_description": "The time is now for it to be okay to be great. People in this world shun people for being great. For being a bright color. For standing out.",
+      "full_description": "Fabrica de mobila la comanda Barlad",
       "details": "There’s nothing I really wanted to do in life that I wasn’t able to get good at. That’s my skill. I’m not really specifically talented at anything except for the ability to learn.",
       "highlights": [
         "Oil is a primary source of energy for various sectors, including transportation, industries, and residential use.",
@@ -192,18 +192,18 @@
   "categories": [
     {
       "thumb_src": "https://i.imgur.com/EeW8NMp.png",
-      "title": "Mobila Vaslui",
-      "collection": "Pre-fall"
+      "title": "Mobila Barlad",
+      "collection": "Office"
     },
     {
       "thumb_src": "https://i.imgur.com/RNeKaGv.png",
       "title": "Mobila Galati",
-      "collection": "Summer"
+      "collection": "Partener"
     },
     {
       "thumb_src": "https://i.imgur.com/nfouuxk.png",
       "title": "Mobila Focsani",
-      "collection": "Summer"
+      "collection": "Partener"
     }
   ],
   "reviews": [
