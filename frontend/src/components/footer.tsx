@@ -66,10 +66,10 @@ export default function Footer() {
                 className="fusion-footer-widget-column widget widget_text"
                 style={{ borderStyle: "solid", borderColor: "transparent", borderWidth: "0px" }}
               >
-                <h4 className="widget-title">Fabrica de mobilă Arta Mobilei</h4>
+                <h4 className="widget-title">Fabrica de mobilă barlad moldova</h4>
                 <div className="textwidget">
                   <p>
-                    La Arta Mobilei aveți posibilitatea de a comandă mobilă direct în fabrică, evitând astfel intermediari și costurile ascunse, având avantajul prețului care este mai mic cu cel puțin 30% față de prețul pieței.
+                    La Mobila Barlad Moldova aveți posibilitatea de a comandă mobilă direct în fabrică, evitând astfel intermediari și costurile ascunse, având avantajul prețului care este mai mic cu cel puțin 30% față de prețul pieței.
                   </p>
                   <p>
                     <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener noreferrer">

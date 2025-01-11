@@ -10,7 +10,7 @@ export default function ComplexFooter() {
             <h5 className="mt-5">Fabrica de Mobilă Moldova - Mobila Direct din Fabrică</h5>
             <div className="textwidget">
               <p>
-                Cumpărați mobilă direct din fabrică la Fabrica de Mobilă Moldova. Evitați intermediarii și costurile ascunse, beneficiind de prețuri mai mici cu cel puțin 30% față de piață. Descoperiți gama noastră variată de mobilă personalizată pentru orice spațiu.
+                Cumpărați mobilă direct din fabrică la Fabrica de Mobilă Barlad Moldova. Evitați intermediarii și costurile ascunse, beneficiind de prețuri mai mici cu cel puțin 30% față de piață. Descoperiți gama noastră variată de mobilă personalizată pentru orice spațiu.
               </p>
               <p>
                 <a

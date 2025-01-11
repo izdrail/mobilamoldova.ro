@@ -32,7 +32,7 @@ export default function TestimonialsFade({
               <div className="col-lg-8 col-sm-9 text-center mx-auto">
                 <h1 className="text-white mb-4">{title}</h1>
                 <p className="lead text-white mb-sm-6 mb-4">
-                  
+                Explorează cea mai rafinată colecție de mobilier lucrat manual din Barlad Moldova. Piesele noastre îmbină stilul, confortul și durabilitatea pentru a-ți transforma spațiile de locuit. Cumpără acum și oferă casei tale o eleganță atemporală!
                 </p>
                 <button className="btn btn-white btn-lg">
                   Exploreaza Mobila Moldova

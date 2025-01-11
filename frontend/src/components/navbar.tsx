@@ -3,6 +3,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg blur border-radius-sm top-0 z-index-3 shadow position-sticky py-3 start-0 end-0">
       <div className="container px-1">
         <a className="navbar-brand font-weight-bolder ms-lg-0 " href="/">
+        <img src="favicon.svg" className="navbar-brand-img" alt="..."/>
           Mobila Moldova
         </a>
         <button className="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
