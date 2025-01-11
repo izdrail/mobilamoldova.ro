@@ -4,9 +4,9 @@ import data from '../../public/data.json';
 import '../../assets/scss/astro-ecommerce.scss';
 import CardCategory from '../components/products/cardCategory';
 import Navbar from '../components/navbar';
-import Footer from '../components/footer';
-
+import Footer from '../components/complexFooter';
 import PromoSectionLarge from '../components/promo/promoSectionLarge';
+
 ---
 
 <Layout title="Mobilă la comandă, la preț de fabrică in Barlad Moldova">
@@ -16,38 +16,101 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
       title={"Mobila la comanda Barlad"}
       full_description={data.products[0].full_description}  
       pageHeaderBgImg={"../images/mobila-bg.webp"}
-      pageHeaderMinVh="95vh"
+      pageHeaderMinVh="55vh"
     />
     <div class="container my-5">
+
+      <div class="row mb-5">
+        <div class="d-block text-center mb-5">
+          <h3>Mobila la comanda</h3>
+          <a class="text-dark font-weight-bold" href="#">Vezi toate categoriile disponibile &gt;</a>
+        </div>
+        <div class="col-md-6">
+          <a href="#">
+            <div class="card card-background align-items-start mb-4 mb-lg-0 h-100">
+              <div class="full-background" style="background-image:url(https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);background-size:cover"></div>
+              <div class="card-body align-items-end d-flex">
+                <div class="d-block mt-10">
+                  <p class="text-white font-weight-bold mb-1"></p>
+                  <h4 class="text-white font-weight-bolder">Mobila Dormitor</h4>
+                  <a href="#" class="text-white text-sm font-weight-semibold mb-0">Descopera concepte de mobila pentru dormitorul tau &gt;</a>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-4">
+            <a href="#">
+              <div class="card card-background align-items-start mb-4 mb-lg-0">
+                <div class="full-background" style="background-image:url(https://images.unsplash.com/photo-1722605090433-41d1183a792d?q=80&w=2660&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);background-size:cover"></div>
+                <div class="card-body align-items-end d-flex">
+                  <div class="d-block mt-10">
+                    <p class="text-white font-weight-bold mb-1"></p>
+                    <h4 class="text-white font-weight-bolder">Mobila la comanda bucatarie</h4>
+                    <a href="#" class="text-white text-sm font-weight-semibold mb-0">Descopera gama noastra de concepte si produse &gt;</a>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="">
+            <a href="#">
+              <div class="card card-background align-items-start mb-4 mb-lg-0">
+                <div class="full-background" style="background-image:url(https://images.unsplash.com/photo-1505693314120-0d443867891c?q=80&w=2718&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);background-size:cover"></div>
+                <div class="card-body align-items-end d-flex">
+                  <div class="d-block mt-10">
+                    <p class="text-white font-weight-bold mb-1"></p>
+                    <h4 class="text-white font-weight-bolder">Paturi</h4>
+                    <a href="#" class="text-white text-sm font-weight-semibold mb-0">Descopera cele mai noi modele de paturi la comanda in Barlad Moldova&gt;</a>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-8">
+
+        <div class="col-md-6 col-lg-3">
+            <a href="#"></a><div class="card card-background align-items-start mb-4 mb-lg-0 undefined"><a href="#"><div class="full-background" style="background-image:url(/astro-ecommerce//images/category1.jpg);background-size:cover"></div></a><div class="card-body text-center w-100 pt-8"><a href="#"></a><div class="d-block mt-10"><a href="#"><p class="text-white font-weight-bold mb-1">Pre-fall</p><h4 class="text-white font-weight-bolder">Silk Dresses</h4></a><a href="#" class="text-white text-sm font-weight-semibold mb-0">See products &gt;</a></div></div></div>
+          </div><div class="col-md-6 col-lg-3">
+            <a href="#"></a><div class="card card-background align-items-start mb-4 mb-lg-0 undefined"><a href="#"><div class="full-background" style="background-image:url(/astro-ecommerce//images/category2.jpg);background-size:cover"></div></a><div class="card-body text-center w-100 pt-8"><a href="#"></a><div class="d-block mt-10"><a href="#"><p class="text-white font-weight-bold mb-1">Designers</p><h4 class="text-white font-weight-bolder">Suits</h4></a><a href="#" class="text-white text-sm font-weight-semibold mb-0">See products &gt;</a></div></div></div>
+          </div><div class="col-md-6 col-lg-3">
+            <a href="#"></a><div class="card card-background align-items-start mb-4 mb-lg-0 undefined"><a href="#"><div class="full-background" style="background-image:url(/astro-ecommerce//images/category3.jpg);background-size:cover"></div></a><div class="card-body text-center w-100 pt-8"><a href="#"></a><div class="d-block mt-10"><a href="#"><p class="text-white font-weight-bold mb-1">Summer</p><h4 class="text-white font-weight-bolder">Festival</h4></a><a href="#" class="text-white text-sm font-weight-semibold mb-0">See products &gt;</a></div></div></div>
+          </div><div class="col-md-6 col-lg-3">
+            <a href="#"></a><div class="card card-background align-items-start mb-4 mb-lg-0 undefined"><a href="#"><div class="full-background" style="background-image:url(/astro-ecommerce//images/category4.jpg);background-size:cover"></div></a><div class="card-body text-center w-100 pt-8"><a href="#"></a><div class="d-block mt-10"><a href="#"><p class="text-white font-weight-bold mb-1">Sale</p><h4 class="text-white font-weight-bolder">Showroom</h4></a><a href="#" class="text-white text-sm font-weight-semibold mb-0">See products &gt;</a></div></div></div>
+          </div>
+      </div>
       <div class="d-block text-center mb-5">
         <h3>
           Mobilă la comandă la preț de fabrică
         </h3>
-        <p class="text-dark font-weight-bold" >
+        <p class="text-dark font-weight-bold">
           Fabrică de mobilă la comandă în <b>Barlad</b>, vinde din stoc sau la comandă, mobilă bucătărie, mobilă dormitor, mobilă living, paturi tapițate și canapele.
         </p>
       </div>  
       <div class="row mb-5">
-        {data.categories.slice(0, 4).map(category => 
-          <div class="col-md-4">
+        {data.categories.map((category, index) => (
+          <div class="col-md-4" key={index}>
             <CardCategory
-              thumb_src = {category.thumb_src}
-              collection = {category.collection}
-              title = {category.title}
+              thumb_src={category.thumb_src}
+              collection={category.collection}
+              title={category.title}
             />
           </div>
-        )}
+        ))}
       </div>
-    
     <Footer />
-
     </div>
   </main>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YFZYSJ9QJM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments)}
+    function gtag() {
+      dataLayer.push(arguments);
+    }
     gtag('js', new Date());
     gtag('config', 'G-YFZYSJ9QJM');
   </script>

@@ -193,17 +193,20 @@
     {
       "thumb_src": "https://i.imgur.com/EeW8NMp.png",
       "title": "Mobila Barlad",
-      "collection": "Office"
+      "collection": "Office",
+      "contact": "<EMAIL>"
     },
     {
       "thumb_src": "https://i.imgur.com/RNeKaGv.png",
       "title": "Mobila Galati",
-      "collection": "Partener"
+      "collection": "Partener",
+      "contact": "<EMAIL>"
     },
     {
       "thumb_src": "https://i.imgur.com/nfouuxk.png",
       "title": "Mobila Focsani",
-      "collection": "Partener"
+      "collection": "Partener",
+      "contact": "<EMAIL>"
     }
   ],
   "reviews": [
