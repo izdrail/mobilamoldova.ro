@@ -30,6 +30,10 @@ RUN apt update && apt install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+
+#RUN curl -fsSL https://ollama.com/install.sh | sh
+
+    
 # Install Python dependencies globally
 RUN pip install \
     python-multipart \
