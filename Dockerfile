@@ -36,6 +36,7 @@ RUN pip install \
     tls_client \
     uvicorn \
     fastapi \
+    litellm \
     xmltodict \
     fastapi-cors \
     asyncio \

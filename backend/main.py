@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
+from litellm import completion
 
 DATABASE = "mobila.db"  # SQLite database file
 CSV_FILE = "mobila.csv"  # CSV file path
@@ -167,6 +168,78 @@ async def get_products():
 
     conn.close()
     return {"data": products}
+@app.get("/products/{product_id}")
+async def get_product(product_id: str):
+    # Database connection
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM products WHERE id = ?", (product_id,))
+    row = cursor.fetchone()
+    
+    if not row:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    # Convert row to structured JSON
+    product = {
+        "id": row[0],
+        "product": {
+            "title": row[1],
+            "product_id": row[4],
+            "price": row[2],
+            "old_price": row[3],
+            "product_active": row[11],
+            "brand": row[10],
+            "category": row[8],
+            "subcategory": row[9],
+        },
+        "campaign": {
+            "campaign_id": row[5],
+            "campaign_name": row[7],
+            "campaign_url": row[6],
+        },
+        "details": {
+
+            "url": row[13],
+            "description": row[15],
+            "images": row[14],
+            "widget_name": row[16],
+        },
+        "metadata": {
+            "aff_code": row[2],
+            "created_at": row[19],
+            "other_data": row[17],
+        }
+    }
+
+    # Initialize Cloudflare API credentials
+    os.environ['CLOUDFLARE_API_KEY'] = "av76jm154SuiQ8wu_4Nm_5tjQRjTB-u2RRJZ_nsS"
+    os.environ['CLOUDFLARE_ACCOUNT_ID'] = "e2fa0631e7c2fafc79e68a70a5968569"
+
+    try:
+        # Generate AI response using product description
+        ai_response = completion(
+            model="cloudflare/@cf/meta/llama-2-7b-chat-int8",
+            messages=[
+                {
+                    "role": "user", 
+                    "content": f"Generate a brief, engaging description for this product in Romanian always return just the generated content and just that. You will use these content as reference when generating: {product['product']['title']} - {product['details']['description']}"
+                }
+            ],
+        )
+        
+        # Add AI-generated content to the response
+        product["ai_enhanced"] = {
+            "description": ai_response.choices[0].message.content if hasattr(ai_response, 'choices') else None
+        }
+    except Exception as e:
+        print(f"Error generating AI content: {e}")
+        product["ai_enhanced"] = {
+            "generated_description": None,
+            "error": "Failed to generate AI content"
+        }
+
+    conn.close()
+    return {"data": product}
 
 # Endpoint: Get unique categories from the database
 @app.get("/categories")
@@ -177,6 +250,10 @@ async def get_categories():
     categories = [row[0] for row in cursor.fetchall()]
     conn.close()
     return {"unique_categories": categories}
+
+
+
+
 
 # Initialize database and load data
 initialize_database()
