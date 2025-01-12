@@ -6,7 +6,7 @@ export default function ComplexFooter() {
     <>
       <footer>
         <div className="row">
-          <div className="col-12 col-md-4">
+          {/* <div className="col-12 col-md-4">
             <h5 className="mt-5">Fabrica de Mobilă Moldova - Mobila Direct din Fabrică</h5>
             <div className="textwidget">
               <p>
@@ -23,10 +23,11 @@ export default function ComplexFooter() {
                 </a>
               </p>
             </div>
-          </div>
-          <div className="col-12 col-md-8">
+          </div> */}
+
+          {/* <div className="col-12 col-md-8">
             <StoreDoubleColumn title={`Descoperă ${data.products[1].title} pentru mobilă de calitate`} />
-          </div>
+          </div> */}
           <div className="col-12 mt-5 mb-lg-0 mb-4">
             <div className="copyright text-center text-sm text-body">
               Copyright © 

@@ -16,13 +16,8 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navigation">
           <ul className="navbar-nav ms-auto">
           <li className="nav-item">
-              <a className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 " aria-current="page" title="mobila bucatarie la comanda" href="/oferta">
-                Oferta
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 " aria-current="page" title="mobila bucatarie la comanda" href="/mobila-bucatarie">
-                Bucatarie
+              <a className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 " aria-current="page" title="mobila bucatarie la comanda" href="/magazin">
+                Magazin
               </a>
             </li>
             <li className="nav-item">
@@ -30,6 +25,12 @@ const Navbar = () => {
                 Dormitor
               </a>
             </li>
+            <li className="nav-item">
+              <a className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 " aria-current="page" title="mobila bucatarie la comanda" href="/mobila-bucatarie">
+                Bucatarie
+              </a>
+            </li>
+        
             <li className="nav-item">
               <a className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 " aria-current="page" href="/paturi-la-comanda">
                Paturi
