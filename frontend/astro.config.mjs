@@ -2,11 +2,42 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 import react from "@astrojs/react";
+import vue from "@astrojs/vue";
+import node from '@astrojs/node';
 
-// https://astro.build/config
+
+
 export default defineConfig({
   integrations: [react()],
-  site: 'https://mobilamoldova.ro',
+  output: "static",
+  output: "server",
+  adapter: node({
+    mode: "standalone"
+  }),
   base: '',
+  server: {
+    proxy: {
+      '/backend': {
+        target: '//127.0.0.1:1501/',
+        secure: false,
+        autoRewrite: true,
+        changeOrigin: true,
+        rewrite: (path)  => path.replace(/^\/backend/,  ''),
+      },
+    }
+  },
+  buildOptions: {
+    outdir: 'dist',
+    emptyOutDir: true,
+    sourcemap: true,
+    minify: true,
+    compressHTML: true,
+    minifyCSS: true,
+    rollupOptions: {
+      plugins: [
+        react(),
+      ],
+    },
+  }
 
 });

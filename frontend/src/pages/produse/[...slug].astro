@@ -1,0 +1,24 @@
+---
+import data from '../../../public/data.json';
+
+const products = data.products;
+
+
+
+
+const { slug } = Astro.params;
+const product = products.find((product) => product.id == slug);
+if (!product) return Astro.redirect("/404");
+const { title, text } = product;
+---
+
+
+<Layout title="Magazin mobila la comanda Barlad">
+	<main>
+    <Navbar />
+    <div class="container mt-5">
+     {{ product }}
+    </div>
+  </main>
+
+</Layout>

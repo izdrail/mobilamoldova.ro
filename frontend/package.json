@@ -1,5 +1,5 @@
 {
-  "name": "@izdrail/mobila",
+  "name": "@izdrail/mobilamoldova-ro",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -7,11 +7,16 @@
     "dev": "astro dev --host 0.0.0.0 --port 1500 --reload",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "astro preview --host 0.0.0.0 --port 1500 --reload ",
+    "astro": "astro",
+    "vite": "vite watch --host",
+    "build-astro": "astro build --watch --no-source-maps",
+    "vite-preview": "vite preview --host 0.0.0.0 --port 1500 --watch"
   },
   "dependencies": {
+    "@astrojs/node": "^9.0.1",
     "@astrojs/react": "^1.2.1",
+    "@astrojs/vue": "^5.0.4",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "astro": "^5.1.3",

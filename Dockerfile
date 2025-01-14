@@ -54,7 +54,7 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 COPY frontend /home/frontend/
 COPY frontend/package.json /home/frontend/package.json
 WORKDIR /home/frontend/
-RUN npm install --legacy-peer-deps
+RUN npm -g install --legacy-peer-deps
 
 
 #Backend

@@ -4,21 +4,90 @@ import data from '../../public/data.json';
 import '../../assets/scss/astro-ecommerce.scss';
 import Navbar from '../components/navbar';
 import CategoryFilter from '../components/products/categoryFilters';
+import CardProduct from '../components/products/cardProduct';
 
-// filter reviews with ID 01
-let productReviews = data.reviews.filter(x => x.productID == "01");
+// Pagination settings
+const productsPerPage = 8; // Set the number of products per page
+let totalPages = Math.ceil(data.products.length / productsPerPage); // Calculate total pages
+
+let currentPage = 1;
+
+// State for filtered products (Initially set to all products)
+let filteredProducts = data.products;
+
+let paginatedProducts = filteredProducts.slice(0, productsPerPage);
+
+// Function to filter products from API
+async function filterProducts(category) {
+  try {
+    const response = await fetch(`/backend/products/filter?category=${category}`);
+    if (response.ok) {
+      const data = await response.json();
+      filteredProducts = data;
+      totalPages = Math.ceil(filteredProducts.length / productsPerPage); // Update total pages
+      currentPage = 1; // Reset to the first page
+      paginatedProducts = filteredProducts.slice(0, productsPerPage);
+      updatePagination();
+    } else {
+      console.error("Error fetching filtered products:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error filtering products:", error);
+  }
+}
+
+// Function to update pagination based on filtered products
+function updatePagination() {
+  const startIndex = (currentPage - 1) * productsPerPage;
+  paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+}
+
+// Function to handle pagination controls
+function handlePaginationChange(page) {
+  currentPage = page;
+  updatePagination();
+}
+
 ---
 
 <Layout title="Magazin mobila la comanda Barlad">
-	<main>
+  <main>
     <Navbar />
     <div class="container mt-5">
-      <CategoryFilter  
-        title="Descopera concepte de mobila la comanda"
-        description={data.products[0].description}
-        price={data.products[0].price}
-      />    
+      <CategoryFilter
+        title="Descopera concepte de mobila disponibile la comanda in magazinul nostru de mobila"
+        onFilterChange={(category) => filterProducts(category)} 
+      />
+    </div>
+    
+    <div class="row">
+      <h5 class="mb-4">Customers also purchased</h5>
+      {paginatedProducts.map(product => 
+        <div class="col-md-6 col-lg-3">
+          <CardProduct 
+            title={product.title}
+            description={product.description}
+            images={product.image_urls}
+          />
+        </div>
+      )}
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-controls mt-4 text-center">
+      <button 
+        class="btn btn-primary"
+        disabled={currentPage === 1}
+        onClick={() => handlePaginationChange(Math.max(1, currentPage - 1))}>
+        Previous
+      </button>
+      <span class="mx-3">Page {currentPage} of {totalPages}</span>
+      <button 
+        class="btn btn-primary"
+        disabled={currentPage === totalPages}
+        onClick={() => handlePaginationChange(Math.min(totalPages, currentPage + 1))}>
+        Next
+      </button>
     </div>
   </main>
-
 </Layout>
