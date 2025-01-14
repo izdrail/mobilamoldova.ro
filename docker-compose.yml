@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   mobilamoldova.ro:
     build: .
@@ -23,5 +21,9 @@ services:
     ports:
       - "11434:11434" # Ollama default port for API access
     environment:
-      # Add any additional configurations if required
       - OLLAMA_ACCESS_KEY=your-ollama-access-key  # Replace with your access key if needed
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
