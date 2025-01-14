@@ -55,7 +55,7 @@ COPY frontend /home/frontend/
 COPY frontend/package.json /home/frontend/package.json
 WORKDIR /home/frontend/
 RUN npm -g install --legacy-peer-deps
-
+RUN npm run build
 
 #Backend
 COPY backend /home/backend/

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
@@ -9,9 +9,12 @@
     "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "strict": true,
+    "types": [
+      "astro/client",
+      "vite-plugin-pwa/vanillajs",
+      "vite-plugin-pwa/info"
+    ],
     "jsx": "react-jsx",
     "jsxImportSource": "react"
-  },
-  "extends": "astro/tsconfigs/strict"
+  }
 }

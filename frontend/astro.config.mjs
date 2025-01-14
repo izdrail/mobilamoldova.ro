@@ -4,17 +4,14 @@ import { defineConfig } from 'astro/config';
 import react from "@astrojs/react";
 import vue from "@astrojs/vue";
 import node from '@astrojs/node';
+import config from "tailwindcss/defaultConfig.js";
 
+import react from "@astrojs/react";
 
+import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
-  integrations: [react()],
-  output: "static",
-  output: "server",
-  adapter: node({
-    mode: "standalone"
-  }),
-  base: '',
+  integrations: [ tailwind(),vue(),react()],
   server: {
     proxy: {
       '/backend': {
@@ -35,7 +32,9 @@ export default defineConfig({
     minifyCSS: true,
     rollupOptions: {
       plugins: [
+        vue(),
         react(),
+        tailwind(),
       ],
     },
   }

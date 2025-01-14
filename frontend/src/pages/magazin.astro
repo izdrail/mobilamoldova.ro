@@ -7,7 +7,7 @@ import CategoryFilter from '../components/products/categoryFilters';
 import CardProduct from '../components/products/cardProduct';
 
 // Pagination settings
-const productsPerPage = 8; // Set the number of products per page
+const productsPerPage = 2500; // Set the number of products per page
 let totalPages = Math.ceil(data.products.length / productsPerPage); // Calculate total pages
 
 let currentPage = 1;
@@ -54,40 +54,20 @@ function handlePaginationChange(page) {
   <main>
     <Navbar />
     <div class="container mt-5">
-      <CategoryFilter
-        title="Descopera concepte de mobila disponibile la comanda in magazinul nostru de mobila"
-        onFilterChange={(category) => filterProducts(category)} 
-      />
+      <div class="row">
+        <h5 class="mb-4">Customers also purchased</h5>
+        {paginatedProducts.map(product => 
+          <div class="col-md-6 col-lg-3">
+            <CardProduct 
+              title={product.title}
+              description={product.description}
+              images={product.image_urls}
+            />
+          </div>
+        )}
+      </div>
     </div>
+  
     
-    <div class="row">
-      <h5 class="mb-4">Customers also purchased</h5>
-      {paginatedProducts.map(product => 
-        <div class="col-md-6 col-lg-3">
-          <CardProduct 
-            title={product.title}
-            description={product.description}
-            images={product.image_urls}
-          />
-        </div>
-      )}
-    </div>
-
-    <!-- Pagination Controls -->
-    <div class="pagination-controls mt-4 text-center">
-      <button 
-        class="btn btn-primary"
-        disabled={currentPage === 1}
-        onClick={() => handlePaginationChange(Math.max(1, currentPage - 1))}>
-        Previous
-      </button>
-      <span class="mx-3">Page {currentPage} of {totalPages}</span>
-      <button 
-        class="btn btn-primary"
-        disabled={currentPage === totalPages}
-        onClick={() => handlePaginationChange(Math.min(totalPages, currentPage + 1))}>
-        Next
-      </button>
-    </div>
   </main>
 </Layout>

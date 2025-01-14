@@ -11,10 +11,10 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
 
 <Layout title="Mobilă la comandă, la preț de fabrică in Barlad">
 	<main>
-    <Navbar />
     <PromoSectionLarge 
+      client:visible
       title={"Mobila la comanda Barlad"}
-      description={"Explorează cea mai rafinată colecție de mobilier lucrat manual din Barlad Moldova. Piesele noastre îmbină stilul, confortul și durabilitatea pentru a-ți transforma spațiile de locuit. Cumpără acum și oferă casei tale o eleganță atemporală!"}  
+      description={"Explorează cea mai rafinată colecție de mobilier lucrat manual din Barlad.  Piesele noastre îmbină stilul, confortul și durabilitatea pentru a-ți transforma spațiile de locuit. Cumpără acum și oferă casei tale o eleganță atemporală!"}  
       pageHeaderBgImg={"../images/mobila-bg.webp"}
       pageHeaderMinVh="55vh"
     />
@@ -201,14 +201,4 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
     <Footer />
     </div>
   </main>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YFZYSJ9QJM"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', 'G-YFZYSJ9QJM');
-  </script>
 </Layout>
