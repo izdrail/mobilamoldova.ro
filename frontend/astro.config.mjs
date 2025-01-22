@@ -3,8 +3,7 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 import react from "@astrojs/react";
 import vue from "@astrojs/vue";
-import node from '@astrojs/node';
-import config from "tailwindcss/defaultConfig.js";
+
 
 import react from "@astrojs/react";
 

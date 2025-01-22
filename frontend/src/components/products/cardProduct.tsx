@@ -1,4 +1,3 @@
-import ProductBadge from './productBadge';
 
 interface Props {
   title: string;
@@ -33,17 +32,13 @@ export default function CardProduct({
 
             {title && 
               <h4 className="font-weight-bold">
-                {title}
+                {title} 
               </h4>
-            }
-
-            {description && 
-              <p className="text-body">{description}</p>
             }
 
             {price && 
               <h4 className="mb-0 text-lg mt-1 mb-3">
-                ${price.toLocaleString()}
+                {price}
               </h4>
             }
 

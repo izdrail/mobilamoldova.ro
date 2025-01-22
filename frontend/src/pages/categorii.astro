@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../../assets/scss/astro-ecommerce.scss';
+import Navbar from '../components/navbar';
+
+// Fetch categories from the remote API
+const response = await fetch('/backend/categories');
+const categorii = await response.json();
+
+
+console.log(categorii);
+
+if (!categorii || !categorii.length) {
+  throw new Error('Failed to fetch categories or no categories available');
+}
+---
+
+<Layout title="Categorii disponibile in magazinul nostru de mobila">
+  <main>
+    <Navbar />
+    <div class="container mt-5">
+      <h1>Oferta mobila la comanda de la mobilamoldova.ro</h1>
+      <p>Descoperiți categoriile noastre de mobilă la comandă:</p>
+      
+      <ul>
+        {categorii.map((categorie) => (
+          <li key={categorie}>{categorie}</li>
+        ))}
+      </ul>
+    </div>
+  </main>
+</Layout>

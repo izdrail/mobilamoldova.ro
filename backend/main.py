@@ -135,8 +135,7 @@ async def list_products():
         for row in rows
     ]
 
-
-@app.get("/categories", response_model=List[Category])
+@app.get("/categories", response_model=List[str])
 async def list_categories():
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -147,7 +146,12 @@ async def list_categories():
     if not rows:
         raise HTTPException(status_code=404, detail="No categories found")
 
-    return [{"category": row[0]} for row in rows]
+    # Extract unique, non-empty categories
+    unique_categories = sorted(
+        set(row[0].strip() for row in rows if row[0].strip())
+    )
+
+    return unique_categories
 
 
 @app.get("/products/{product_id}", response_model=Product)

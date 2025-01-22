@@ -3,7 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import data from '../../public/data.json';
 import '../../assets/scss/astro-ecommerce.scss';
 import CardCategory from '../components/products/cardCategory';
-import Navbar from '../components/navbar';
 import Footer from '../components/complexFooter';
 import PromoSectionLarge from '../components/promo/promoSectionLarge';
 
@@ -15,7 +14,7 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
       client:visible
       title={"Mobila la comanda Barlad"}
       description={"Explorează cea mai rafinată colecție de mobilier lucrat manual din Barlad.  Piesele noastre îmbină stilul, confortul și durabilitatea pentru a-ți transforma spațiile de locuit. Cumpără acum și oferă casei tale o eleganță atemporală!"}  
-      pageHeaderBgImg={"../images/mobila-bg.webp"}
+      pageHeaderBgImg={"../mobila-moldova-harta.png"}
       pageHeaderMinVh="55vh"
     />
     <div class="container my-5">
@@ -28,12 +27,11 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
           <p class="lead">
             La fabrica noastră din Bârlad, producem mobilă la comandă la prețuri direct de producător. Oferim soluții personalizate pentru dormitoare, bucătării, livinguri și paturi tapițate, garantând calitate și durabilitate.
           </p>
-          <!-- <a class="text-dark font-weight-bold" href="#">Vezi toate categoriile disponibile &gt;</a> -->
         </div>
         <div class="col-md-6">
           <a href="#">
             <div class="card card-background align-items-start mb-4 mb-lg-0 h-100">
-              <div class="full-background" style="background-image:url(https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);background-size:cover"></div>
+              <div class="full-background" style="background-image:url(mobila-dormitor.jpg);background-size:cover"></div>
               <div class="card-body align-items-end d-flex">
                 <div class="d-block mt-10">
                   <p class="text-white font-weight-bold mb-1"></p>
@@ -50,7 +48,7 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
           <div class="mb-4">
             <a href="#">
               <div class="card card-background align-items-start mb-4 mb-lg-0">
-                <div class="full-background" style="background-image:url(https://images.unsplash.com/photo-1722605090433-41d1183a792d?q=80&w=2660&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);background-size:cover"></div>
+                <div class="full-background" style="background-image:url(mobila-bucatarie.webp);background-size:cover"></div>
                 <div class="card-body align-items-end d-flex">
                   <div class="d-block mt-10">
                     <p class="text-white font-weight-bold mb-1"></p>
@@ -85,7 +83,9 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
           </div>
         </div>
       </div>
-      <div class="row mb-8">
+
+
+      <div class="row mb-5">
         <div class="col-md-6 col-lg-3">
           <a href="#"></a>
           <div class="card card-background align-items-start mb-4 mb-lg-0 undefined">
@@ -138,7 +138,7 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
             <a href="#">
               <div
                 class="full-background"
-                style="background-image:url(https://plus.unsplash.com/premium_photo-1672883552313-17a6f34ff1a0?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);background-size:cover"
+                style="background-image:url(mobila-hol.jpg);background-size:cover"
               ></div>
             </a>
             <div class="card-body text-center w-100 pt-8">
@@ -161,7 +161,7 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
             <a href="#">
               <div
                 class="full-background"
-                style="background-image:url(https://images.unsplash.com/photo-1486946255434-2466348c2166?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);background-size:cover"
+                style="background-image:url(birouri.jpg);background-size:cover"
               ></div>
             </a>
             <div class="card-body text-center w-100 pt-8">
