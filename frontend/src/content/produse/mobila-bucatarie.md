@@ -1,8 +1,8 @@
 ---
-title: Mobila Bucatarie
-slug: mobila-bucatarie
-description:  Learn how to write effective marketing and sales emails with these 300 tips and tricks.
+title: Produsul 1
+description:  Produsul 1 descriererează produsul 1
+price: 100
 ---
 
 
-## Mobila Bucatarie antrcit
+## Produsul 1

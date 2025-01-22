@@ -40,6 +40,7 @@ RUN pip install \
     tls_client \
     uvicorn \
     fastapi \
+    markdown \
     litellm \
     xmltodict \
     fastapi-cors \
