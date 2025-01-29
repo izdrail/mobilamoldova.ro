@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import data from '../../public/data.json';
+import '../../assets/scss/astro-ecommerce.scss';
+import Navbar from '../components/navbar';
+
+const pageMetadata = {
+  title: "Mobila Moldova - Mobilă la Comandă în Bârlad | Soluții Personalizate",
+  description: "Mobila Moldova oferă mobilă la comandă în Bârlad. Specialiști în design interior cu peste 15 ani experiență. Producție personalizată, transport gratuit, consultanță profesională.",
+  keywords: "mobila la comanda barlad, mobila personalizata barlad, mobilier la comanda moldova, mobila barlad"
+};
+
+const companyDetails = {
+  name: "Mobila Moldova",
+  address: "Bârlad, Vaslui, România",
+  phone: "+40 3 70 70 1874",
+  email: "contact@mobilamoldova.ro",
+  openingHours: "Luni-Vineri: 09:00-17:00"
+};
+---
+
+<Layout 
+  title={pageMetadata.title}
+  description={pageMetadata.description}
+>
+  <main itemscope itemtype="https://schema.org/LocalBusiness">
+    <Navbar />
+    
+    <div class="container mt-5">
+      <article>
+        <header>
+          <h1 itemprop="name">Mobila Moldova - Mobilă la Comandă în Bârlad</h1>
+        </header>
+
+        <section class="location-intro" itemprop="description">
+          <h2>Experți în Mobilier Personalizat în Bârlad și Moldova</h2>
+          <p>
+            Situați în inima Moldovei, la Bârlad, suntem specializați în <b>producerea de mobilier la comandă</b> care transformă spațiile locative și comerciale. 
+            Cu peste 15 ani de experiență, oferim soluții de design interior adaptate perfect nevoilor dumneavoastră.
+          </p>
+        </section>
+
+        <section class="specialization">
+          <h3>Specializări</h3>
+          <ul>
+            <li>Mobilier personalizat pentru locuințe</li>
+            <li>Design interior pentru spații comerciale</li>
+            <li>Soluții de mobilare complete</li>
+          </ul>
+        </section>
+
+        <section class="services" itemscope itemtype="https://schema.org/Service">
+          <h3>Servicii Complete</h3>
+          <div class="service-list">
+            <ul>
+              <li>✓ Consultanță gratuită la domiciliu</li>
+              <li>✓ Proiectare 3D personalizată</li>
+              <li>✓ Transport gratuit în Bârlad și împrejurimi</li>
+              <li>✓ Montaj profesional inclus</li>
+              <li>✓ Garanție 2 ani pentru toate produsele</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="materials">
+          <h3>Materiale de Top</h3>
+          <p>
+            Lucrăm exclusiv cu materiale de calitate superioară:
+            <ul>
+              <li>PAL melaminat</li>
+              <li>MDF de înaltă densitate</li>
+              <li>Furnir premium</li>
+              <li>Postforming profesional</li>
+            </ul>
+          </p>
+        </section>
+
+        <section class="achievements" itemscope itemtype="https://schema.org/ItemList">
+          <h3>Realizări Remarcabile</h3>
+          <div class="stats">
+            <ul>
+              <li>
+                <strong>19,270</strong>
+                <span>Piese de mobilier create</span>
+              </li>
+              <li>
+                <strong>1,670</strong>
+                <span>Clienți mulțumiți</span>
+              </li>
+              <li>
+                <strong>9,570</strong>
+                <span>Montaje realizate</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="contact-info" itemprop="contactPoint">
+          <h3>Contact Mobila Moldova</h3>
+          <div class="contact-details">
+            <p>
+              <strong>Adresă:</strong> {companyDetails.address}<br>
+              <strong>Telefon:</strong> {companyDetails.phone}<br>
+              <strong>Email:</strong> {companyDetails.email}<br>
+              <strong>Program:</strong> {companyDetails.openingHours}
+            </p>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  .services ul, 
+  .achievements .stats ul,
+  .materials ul,
+  .specialization ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+</style>

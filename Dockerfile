@@ -2,12 +2,6 @@ FROM python:3.11
 
 LABEL maintainer="Stefan Bogdanel <stefan@izdrail.com>"
 
-# Set a var to store the version of the image
-ENV VERSION="0.0.1"
-
-
-LABEL version="${VERSION}"
-
 
 # Update and install necessary packages
 RUN apt update && apt install -y \
@@ -55,8 +49,8 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 COPY frontend /home/frontend/
 COPY frontend/package.json /home/frontend/package.json
 WORKDIR /home/frontend/
-RUN npm -g install --legacy-peer-deps
-RUN npm run build
+RUN npm install --force
+
 
 #Backend
 COPY backend /home/backend/

@@ -13,17 +13,3 @@ services:
     environment:
       - CLOUDFLARE_ACCOUNT_ID=e2fa0631e7c2fafc79e68a70a5968569
       - CLOUDFLARE_API_KEY=av76jm154SuiQ8wu_4Nm_5tjQRjTB-u2RRJZ_nsS
-
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    restart: always
-    ports:
-      - "11434:11434" # Ollama default port for API access
-    environment:
-      - OLLAMA_ACCESS_KEY=your-ollama-access-key  # Replace with your access key if needed
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]

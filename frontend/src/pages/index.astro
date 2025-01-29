@@ -3,9 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import data from '../../public/data.json';
 import '../../assets/scss/astro-ecommerce.scss';
 import CardCategory from '../components/products/cardCategory';
-import Footer from '../components/complexFooter';
 import PromoSectionLarge from '../components/promo/promoSectionLarge';
+import { getPosts } from '../utils/post'
 
+const MAX_POSTS = 5 // max number of posts to show on the home page
+const posts = await getPosts(MAX_POSTS)
 ---
 
 <Layout title="Mobilă la comandă, la preț de fabrică in Barlad">
@@ -25,7 +27,8 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
             De ce să alegi mobila la comandă din Bârlad? 
           </h3>
           <p class="lead">
-            La fabrica noastră din Bârlad, producem mobilă la comandă la prețuri direct de producător. Oferim soluții personalizate pentru dormitoare, bucătării, livinguri și paturi tapițate, garantând calitate și durabilitate.
+            La fabrica noastră din Bârlad, producem mobilă la comandă la prețuri direct de producător. 
+            Oferim soluții personalizate pentru dormitoare, bucătării, livinguri și paturi tapițate, garantând calitate și durabilitate.
           </p>
         </div>
         <div class="col-md-6">
@@ -35,10 +38,11 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
               <div class="card-body align-items-end d-flex">
                 <div class="d-block mt-10">
                   <p class="text-white font-weight-bold mb-1"></p>
-                  <h2 class="text-white font-weight-bolder">Mobila Dormitor</h2>
-                  <a href="/mobila-dormitor" class="text-white text-sm font-weight-semibold mb-0">Descoperă gama noastră de mobilă de dormitor personalizată în Bârlad, creată pentru a oferi confort și starea de bine pe care le meriți. Ne specializăm în fabricarea de mobilă adaptată nevoilor tale, incluzând somiere și saltele de calitate premium, esențiale pentru un somn odihnitor.
-
-                    &gt;</a>
+                  <h2 class="text-white font-weight-bolder" title="mobila dormitor la comanda barlad">Mobila Dormitor</h2>
+                  <a href="/categorie/mobila-dormitor" title="Mobila Dormitor" class="text-white text-sm font-weight-semibold mb-0">
+                    Descoperă gama noastră de mobilă de dormitor personalizată în Bârlad, creată pentru a oferi confort și starea de bine pe care le meriți. 
+                    Ne specializăm în fabricarea de mobilă adaptată nevoilor tale, incluzând somiere și saltele de calitate premium, esențiale pentru un somn odihnitor.
+                  </a>
                 </div>
               </div>
             </div>
@@ -52,13 +56,12 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
                 <div class="card-body align-items-end d-flex">
                   <div class="d-block mt-10">
                     <p class="text-white font-weight-bold mb-1"></p>
-                    <h2 class="text-white font-weight-bolder">Mobila bucatarie</h2>
+                    <h2 class="text-white font-weight-bolder" title="mobila bucatarie la comanda">Mobila bucatarie</h2>
                     <p class="text-white">
                       Mobila de bucătărie este esențială pentru a crea un spațiu practic și funcțional, ideal pentru momentele petrecute alături de cei dragi. 
                     </p>
                     <a href="/mobila-bucatarie" class="text-white text-sm font-weight-semibold mb-0">
-                      Transformă bucătăria ta într-un spațiu modern și funcțional cu mobila personalizată produsă local in Barlad
-              
+                      Transformă bucătăria ta într-un spațiu modern și funcțional cu mobila personalizată produsă local in Barlad.
                     </a>
                   </div>
                 </div>
@@ -72,8 +75,8 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
                 <div class="card-body align-items-end d-flex">
                   <div class="d-block mt-10">
                     <p class="text-white font-weight-bold mb-1"></p>
-                    <h2 class="text-white font-weight-bolder">Paturi</h2>
-                    <a href="#" class="text-white text-sm font-weight-semibold mb-0">Un pat de dormitor este piesa centrală de mobilier din orice cameră de odihnă, oferind un spațiu ideal pentru relaxare și un somn odihnitor. 
+                    <h2 class="text-white font-weight-bolder" title="paturi la comanda barlad">Paturi</h2>
+                    <a href="#" class="text-white text-sm font-weight-semibold mb-0">Un <b>pat de dormitor</b> este piesa centrală de mobilier din orice cameră de odihnă, oferind un spațiu ideal pentru relaxare și un somn odihnitor. 
                       Alegerea unui pat potrivit nu doar că îmbunătățește confortul, ci contribuie și la armonizarea decorul. Descoperiti paturi dormitor de diverse dimensiuni, adaptate nevoilor fiecărei persoane.
                     </a>
                   </div>
@@ -198,7 +201,7 @@ import PromoSectionLarge from '../components/promo/promoSectionLarge';
           </div>
         ))}
       </div>
-    <Footer />
+
     </div>
   </main>
 </Layout>

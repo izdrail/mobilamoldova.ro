@@ -1,221 +1,250 @@
 import sqlite3
 import csv
 import os
-from fastapi import FastAPI, HTTPException
-from typing import List, Optional
-from pydantic import BaseModel  # Add this import
+import math
+from datetime import datetime
+from typing import List, Optional, Dict, Any
+
+from fastapi import FastAPI, HTTPException, Query, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field, validator
+from sqlalchemy import create_engine, Column, Integer, String, Float, text
+from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.ext.declarative import declarative_base
 
 # Configuration
-DATABASE = "mobila-products.db"
+DATABASE_URL = "sqlite:///mobila-products.db"
 CSV_FILE = "processed-products.csv"
 
-# FastAPI App
-app = FastAPI()
+# SQLAlchemy Setup
+Base = declarative_base()
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Models for responses
-class Product(BaseModel):
+# FastAPI App
+app = FastAPI(
+    title="Mobila Moldova Product API",
+    description="Comprehensive product management API for Mobila Moldova",
+    version="1.1.0"
+)
+
+# CORS Middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
+# Enhanced Product Model
+class Product(Base):
+    __tablename__ = "products"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True)
+    aff_code = Column(String, nullable=True)
+    price = Column(Float, nullable=True)
+    category = Column(String, index=True)
+    subcategory = Column(String, nullable=True)
+    brand = Column(String, nullable=True)
+    url = Column(String, nullable=True)
+    image_urls = Column(String, nullable=True)
+    description = Column(String, nullable=True)
+    short_message = Column(String, nullable=True)
+    created_at = Column(String, nullable=True)
+
+# Pydantic Models for Validation
+class ProductSchema(BaseModel):
     id: int
     title: str
-    aff_code: Optional[str]
-    price: Optional[float]
-    category: Optional[str]
-    subcategory: Optional[str]
-    brand: Optional[str]
-    url: Optional[str]
-    image_urls: Optional[str]
-    description: Optional[str]
-    short_message: Optional[str]
-    created_at: Optional[str]
+    aff_code: Optional[str] = None
+    price: Optional[float] = None
+    category: Optional[str] = None
+    subcategory: Optional[str] = None
+    brand: Optional[str] = None
+    url: Optional[str] = None
+    image_urls: Optional[str] = None
+    description: Optional[str] = None
+    short_message: Optional[str] = None
+    created_at: Optional[str] = None
 
+    class Config:
+        orm_mode = True
 
-class Category(BaseModel):
-    category: str
+class ProductFilterResponse(BaseModel):
+    products: List[ProductSchema]
+    total_count: int
+    page: int
+    page_size: int
+    total_pages: int
 
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-# Utility functions
+# Database Initialization
 def initialize_database():
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS products (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT,
-            aff_code TEXT,
-            price REAL,
-            category TEXT,
-            subcategory TEXT,
-            brand TEXT,
-            url TEXT,
-            image_urls TEXT,
-            description TEXT,
-            short_message TEXT,
-            created_at TEXT
-        )
-        """
-    )
-    conn.commit()
-    conn.close()
+    Base.metadata.create_all(bind=engine)
     print("Database initialized successfully!")
 
-
-def import_from_csv():
+def import_from_csv(db: Session):
     if not os.path.exists(CSV_FILE):
         print(f"Error: CSV file '{CSV_FILE}' not found!")
         return False
 
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
     products_added = 0
-
     try:
         with open(CSV_FILE, mode="r", encoding="utf-8") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 try:
-                    cursor.execute(
-                        """
-                        INSERT OR IGNORE INTO products (
-                            id, title, aff_code, price,
-                            category, subcategory, brand,
-                            url, image_urls, short_message, description, created_at
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        """,
-                        (
-                            row["id"], row["title"], row["aff_code"], row["price"],
-                            row["category"], row["subcategory"], row["brand"],
-                            row["url"], row["image_urls"], row["short_message"], row["description"],
-                            row.get("created_at", None) or "N/A",
-                        ),
+                    product = Product(
+                        id=int(row.get("id", 0)),
+                        title=row.get("title", ""),
+                        aff_code=row.get("aff_code"),
+                        price=float(row.get("price", 0)) if row.get("price") else None,
+                        category=row.get("category"),
+                        subcategory=row.get("subcategory"),
+                        brand=row.get("brand"),
+                        url=row.get("url"),
+                        image_urls=row.get("image_urls"),
+                        description=row.get("description"),
+                        short_message=row.get("short_message"),
+                        created_at=row.get("created_at", datetime.now().isoformat())
                     )
+                    db.merge(product)
                     products_added += 1
-                except sqlite3.Error as e:
-                    print(f"Error inserting row: {e}")
+                except Exception as e:
+                    print(f"Error processing row: {e}")
                     continue
 
-        conn.commit()
-        print(f"Successfully imported {products_added} products from CSV")
+            db.commit()
+            print(f"Successfully imported {products_added} products from CSV")
         return True
-
     except Exception as e:
         print(f"Error reading CSV file: {e}")
         return False
 
-    finally:
-        conn.close()
-
-
-# API Endpoints
-@app.get("/products", response_model=List[Product])
-async def list_products():
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM products")
-    rows = cursor.fetchall()
-    conn.close()
-
-    if not rows:
+# Enhanced API Endpoints
+@app.get("/products", response_model=List[ProductSchema])
+def list_products(
+    db: Session = Depends(get_db),
+    skip: int = Query(0, ge=0),
+    limit: int = Query(100, ge=1, le=1000)
+):
+    products = db.query(Product).offset(skip).limit(limit).all()
+    
+    if not products:
         raise HTTPException(status_code=404, detail="No products found")
-
-    return [
-        {
-            "id": row[0],
-            "title": row[1],
-            "aff_code": row[2],
-            "price": row[3],
-            "category": row[4],
-            "subcategory": row[5],
-            "brand": row[6],
-            "url": row[7],
-            "image_urls": row[8],
-            "description": row[9],
-            "short_message": row[10],
-            "created_at": row[11],
-        }
-        for row in rows
-    ]
+    
+    return products
 
 @app.get("/categories", response_model=List[str])
-async def list_categories():
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
-    cursor.execute("SELECT DISTINCT category FROM products")
-    rows = cursor.fetchall()
-    conn.close()
-
-    if not rows:
-        raise HTTPException(status_code=404, detail="No categories found")
-
-    # Extract unique, non-empty categories
+def list_categories(db: Session = Depends(get_db)):
+    categories = db.query(Product.category).distinct().filter(Product.category.isnot(None)).all()
+    
     unique_categories = sorted(
-        set(row[0].strip() for row in rows if row[0].strip())
+        set(cat[0].strip() for cat in categories if cat[0] and cat[0].strip())
     )
-
+    
+    if not unique_categories:
+        raise HTTPException(status_code=404, detail="No categories found")
+    
     return unique_categories
 
-
-@app.get("/products/{product_id}", response_model=Product)
-async def get_product_by_id(product_id: int):
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM products WHERE id = ?", (product_id,))
-    row = cursor.fetchone()
-    conn.close()
-
-    if not row:
+@app.get("/products/{product_id}", response_model=ProductSchema)
+def get_product_by_id(product_id: int, db: Session = Depends(get_db)):
+    product = db.query(Product).filter(Product.id == product_id).first()
+    
+    if not product:
         raise HTTPException(status_code=404, detail=f"Product with ID {product_id} not found")
+    
+    return product
 
-    return {
-        "id": row[0],
-        "title": row[1],
-        "aff_code": row[2],
-        "price": row[3],
-        "category": row[4],
-        "subcategory": row[5],
-        "brand": row[6],
-        "url": row[7],
-        "image_urls": row[8],
-        "description": row[9],
-        "short_message": row[10],
-        "created_at": row[11],
-    }
+@app.post("/products/filter", response_model=ProductFilterResponse)
+def advanced_product_filter(
+    category: Optional[str] = Query(None, description="Filter by category"),
+    subcategory: Optional[str] = Query(None, description="Filter by subcategory"),
+    min_price: Optional[float] = Query(None, description="Minimum price filter"),
+    max_price: Optional[float] = Query(None, description="Maximum price filter"),
+    brand: Optional[str] = Query(None, description="Filter by brand"),
+    page: int = Query(1, ge=1, description="Page number"),
+    page_size: int = Query(20, ge=1, le=100, description="Number of items per page"),
+    db: Session = Depends(get_db)
+):
+    """
+    Advanced product filtering with comprehensive search and pagination
+    """
+    try:
+        print(f"Request parameters: category={category}, subcategory={subcategory}, min_price={min_price}, max_price={max_price}, brand={brand}, page={page}, page_size={page_size}")
+        
+        query = db.query(Product)
+        
+        # Apply filters dynamically
+        if category:
+            query = query.filter(Product.category.like(f"%{category}%"))
+        
+        if subcategory:
+            query = query.filter(Product.subcategory.like(f"%{subcategory}%"))
+        
+        if min_price is not None:
+            query = query.filter(Product.price >= min_price)
+        
+        if max_price is not None:
+            query = query.filter(Product.price <= max_price)
+        
+        if brand:
+            query = query.filter(Product.brand.like(f"%{brand}%"))
+        
+        # Count total results before pagination
+        total_count = query.count()
+        
+        # Calculate pagination
+        total_pages = math.ceil(total_count / page_size)
+        offset = (page - 1) * page_size
+        
+        # Apply pagination
+        products = query.offset(offset).limit(page_size).all()
+        
+        if not products:
+            raise HTTPException(status_code=404, detail="No products found matching the specified filters")
+        
+        print(f"Query constructed: {query}")
+        print(f"Number of products fetched: {len(products)}")
 
-
-@app.get("/products/filter", response_model=List[Product])
-async def filter_products_by_category(category: str):
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM products WHERE category = ?", (category,))
-    rows = cursor.fetchall()
-    conn.close()
-
-    if not rows:
-        raise HTTPException(status_code=404, detail=f"No products found for category '{category}'")
-
-    return [
-        {
-            "id": row[0],
-            "title": row[1],
-            "aff_code": row[2],
-            "price": row[3],
-            "category": row[4],
-            "subcategory": row[5],
-            "brand": row[6],
-            "url": row[7],
-            "image_urls": row[8],
-            "description": row[9],
-            "short_message": row[10],
-            "created_at": row[11],
+        return {
+            "products": products,
+            "total_count": total_count,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": total_pages
         }
-        for row in rows
-    ]
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
-
-# Ensure database is initialized before the app starts
+# Startup Event
 @app.on_event("startup")
 async def startup_event():
     print("\nInitializing database...")
     initialize_database()
-    print("\nImporting data from CSV...")
-    import_from_csv()
+    
+    # Use a new database session for importing
+    db = SessionLocal()
+    try:
+        print("\nImporting data from CSV...")
+        import_from_csv(db)
+    finally:
+        db.close()
+    
     print("\nApplication startup complete!")
+
+# Health Check Endpoint
+@app.get("/health")
+def health_check(): 
+    return {"status": "healthy"}

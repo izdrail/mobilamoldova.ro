@@ -1,50 +1,64 @@
-import data from '../../public/data.json';
-import StoreDoubleColumn from '../components/store/storeDoubleColumn';
+const navigationItems = [
+  ['Despre', '/despre-noi'],
+  ['Magazin', '/magazin'],
+  ['Living', '/categorie/mobila-living'],
+  ['Dormitor', '/categorie/mobila-dormitor'],
+  ['Bucatarie', '/categorie/mobila-de-bucatarie'],
+  ['Copii', '/categorie/mobila-copii'],
+  ['Paturi', '/categorie/paturi'],
+  ['Birouri', '/categorie/birouri'],
+  ['Recicleaza', '/recicleaza'],
+  ['Contact', '/contact']
+];
 
 export default function ComplexFooter() {
   return (
     <>
-      <footer>
-        <div className="row">
-          {/* <div className="col-12 col-md-4">
-            <h5 className="mt-5">Fabrica de Mobilă Moldova - Mobila Direct din Fabrică</h5>
-            <div className="textwidget">
-              <p>
-                Cumpărați mobilă direct din fabrică la Fabrica de Mobilă Barlad Moldova. Evitați intermediarii și costurile ascunse, beneficiind de prețuri mai mici cu cel puțin 30% față de piață. Descoperiți gama noastră variată de mobilă personalizată pentru orice spațiu.
-              </p>
-              <p>
-                <a
-                  title="ANPC - Autoritatea Națională pentru Protecția Consumatorilor"
-                  href="https://anpc.ro/ce-este-sal/"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  Verificați mai multe despre drepturile dvs. la ANPC.
-                </a>
-              </p>
+      <footer className="bg-yellow-50 dark:bg-gray-800">
+        <div className="lg:-10 mx-auto max-w-screen-xl p-4 py-6 md:p-8">
+          <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
+            <div className="col-span-2">
+              <a href="#" className="mb-2 flex items-center text-2xl font-semibold text-gray-900 dark:text-white sm:mb-0">
+                Mobila Moldova
+              </a>
+              <p className="my-4 text-gray-500 dark:text-gray-400">
+                Fabrică de <b>mobilă la comandă în Barlad</b>, vinde din stoc sau la comandă, mobilă bucătărie, mobilă dormitor, mobilă living, paturi tapițate și canapele.</p>
+              
+              <img src="anpc.png" />
+              <ul className="mt-5 flex space-x-6">
+                {/* ... social media links ... */}
+              </ul>
             </div>
-          </div> */}
-
-          {/* <div className="col-12 col-md-8">
-            <StoreDoubleColumn title={`Descoperă ${data.products[1].title} pentru mobilă de calitate`} />
-          </div> */}
-          <div className="col-12 mt-5 mb-lg-0 mb-4">
-            <div className="copyright text-center text-sm text-body">
-              Copyright © 
-              <script>
-                document.write(new Date().getFullYear());
-              </script>
-              &nbsp;Mobila Barlad Moldova - Designed by &nbsp;
-              <a
-                href="https://laravelcompany.com"
-                title="Laravel Agency Essex - Soluții E-commerce pentru Mobilă"
-                className="text-dark"
-                target="_blank"
-              >
-                Laravel Agency Essex
-              </a>.
+            <div className="lg:mx-auto">
+              <ul className="text-gray-500 dark:text-gray-400">
+                {navigationItems.slice(0, 3).map(([label, path]) => (
+                  <li key={path} className="mb-4">
+                    <a href={path} className="hover:underline">{label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="lg:mx-auto">
+              <ul className="text-gray-500 dark:text-gray-400">
+                {navigationItems.slice(3, 6).map(([label, path]) => (
+                  <li key={path} className="mb-4">
+                    <a href={path} className="hover:underline">{label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="lg:mx-auto">
+              <ul className="text-gray-500 dark:text-gray-400">
+                {navigationItems.slice(6).map(([label, path]) => (
+                  <li key={path} className="mb-4">
+                    <a href={path} className="hover:underline">{label}</a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
+          <hr className="my-6 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8"/>
+          <span className="block text-center text-sm text-gray-500 dark:text-gray-400"> 2021-2022 <a href="https://laravelcompany.com" className="hover:underline">Laravel Agency</a>. All Rights Reserved.</span>
         </div>
       </footer>
     </>

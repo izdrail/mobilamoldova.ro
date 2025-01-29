@@ -1,26 +1,54 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import data from '../../public/data.json';
-import '../../assets/scss/astro-ecommerce.scss';
 import Navbar from '../components/navbar';
 import CardProduct from '../components/products/cardProduct';
 
-// Pagination settings
-const productsPerPage = 10;
-let currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
-let filteredProducts = data.products;
-const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+// Function to fetch data from the API with pagination and filters
+async function fetchProducts(page = 1, pageSize = 10, category = '', subcategory = '', minPrice, maxPrice, brand) {
+  let url = `https://localhost:1501/products/filter?page=${page}&page_size=${pageSize}`;
+  
+  if (category) url += `&category=${encodeURIComponent(category)}`;
+  if (subcategory) url += `&subcategory=${encodeURIComponent(subcategory)}`;
+  if (minPrice !== undefined) url += `&min_price=${minPrice}`;
+  if (maxPrice !== undefined) url += `&max_price=${maxPrice}`;
+  if (brand) url += `&brand=${encodeURIComponent(brand)}`;
 
-// Ensure current page is within valid range
-if (currentPage < 1) currentPage = 1;
-if (currentPage > totalPages) currentPage = totalPages;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
 
-// Calculate pagination ranges
-const startIndex = (currentPage - 1) * productsPerPage;
-const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+// Function to fetch categories from the backend
+async function fetchCategories() {
 
-// Generate array of page numbers for pagination
-const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  return [
+  "Birouri",
+  "Mobila Copii",
+  "Mobila Dormitor",
+  "Mobila Living",
+  "Mobila de Bucatarie",
+  "Paturi"
+];
+}
+
+// Fetch categories
+const categories = await fetchCategories();
+
+// Get query parameters from URL
+const url = new URL(Astro.request.url);
+const currentPage = parseInt(url.searchParams.get('page') || '1', 10);
+const category = url.searchParams.get('category') || '';
+const subcategory = url.searchParams.get('subcategory') || '';
+const minPrice = url.searchParams.get('min_price') ? parseFloat(url.searchParams.get('min_price')) : undefined;
+const maxPrice = url.searchParams.get('max_price') ? parseFloat(url.searchParams.get('max_price')) : undefined;
+const brand = url.searchParams.get('brand') || '';
+
+// Fetch products based on current filters and pagination
+const { products, total_count, page, page_size, total_pages } = await fetchProducts(currentPage, 10, category, subcategory, minPrice, maxPrice, brand);
+
+// Calculate pagination details
+const startIndex = (currentPage - 1) * page_size + 1;
+const endIndex = Math.min(startIndex + page_size - 1, total_count);
 ---
 
 <Layout title="Produse - Magazin Mobila Moldova">
@@ -35,41 +63,73 @@ const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
           Alegeti produsul de mobila preferat
         </h2>
 
- 
-        <!-- Products -->
-        {paginatedProducts.map(product => 
-          <div class="col-lg-4">
-            <CardProduct 
-              title={product.title}
-              price={product.price}
-              description={product.description}
-              images={product.image_urls}
-            />
+        <!-- Filters -->
+        <form id="filterForm" action="" method="get" class="mb-4">
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <label for="categoryFilter" class="form-label">Categorie:</label>
+              <select name="category" id="categoryFilter" class="form-select">
+                <option value="">Toate</option>
+                {categories.map(cat => <option value={cat} selected={cat === category}>{cat}</option>)}
+              </select>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="subcategoryFilter" class="form-label">Subcategorie:</label>
+              <input type="text" name="subcategory" id="subcategoryFilter" class="form-control" value={subcategory}>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="minPriceFilter" class="form-label">Pret minim:</label>
+              <input type="number" name="min_price" id="minPriceFilter" class="form-control" value={minPrice || ''}>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="maxPriceFilter" class="form-label">Pret maxim:</label>
+              <input type="number" name="max_price" id="maxPriceFilter" class="form-control" value={maxPrice || ''}>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="brandFilter" class="form-label">Brand:</label>
+              <input type="text" name="brand" id="brandFilter" class="form-control" value={brand}>
+            </div>
+            <div class="col-md-3 mb-3">
+              <button type="submit" class="btn btn-primary">Filtreaza</button>
+            </div>
           </div>
-        )}
+        </form>
+
+        <!-- Products -->
+        <div class="row">
+          {products.map(product => 
+            <div class="col-lg-4">
+              <CardProduct 
+                title={product.title}
+                price={product.price}
+                description={product.description}
+                images={product.image_urls ? product.image_urls.split(',') : []}  
+              />
+            </div>
+          )}
+        </div>
+
       </div>
 
-      <div class="container col-lg-12">
-      <!-- Pagination Controls -->
-      <nav aria-label="Product pagination" class=" mt-4">
-        <ul class="pagination justify-content-center">
+      <div class="row">
+        <ul class="pagination justify-content-center" style="max-width: 75%;">
           <!-- Previous button -->
           <li class={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
             <a 
               class="page-link" 
-              href={`?page=${currentPage - 1}`}
+              href={`?${new URLSearchParams({...Object.fromEntries(url.searchParams), page: currentPage - 1})}`}
               aria-label="Previous"
             >
-              <span aria-hidden="true">&laquo;</span>
+              <span aria-hidden="true">«</span>
             </a>
           </li>
 
           <!-- Page numbers -->
-          {pageNumbers.map(pageNum => (
+          {Array.from({ length: total_pages }, (_, i) => i + 1).map(pageNum => (
             <li class={`page-item ${pageNum === currentPage ? 'active' : ''}`}>
               <a 
                 class="page-link" 
-                href={`?page=${pageNum}`}
+                href={`?${new URLSearchParams({...Object.fromEntries(url.searchParams), page: pageNum})}`}
               >
                 {pageNum}
               </a>
@@ -77,26 +137,23 @@ const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
           ))}
 
           <!-- Next button -->
-          <li class={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <li class={`page-item ${currentPage === total_pages ? 'disabled' : ''}`}>
             <a 
               class="page-link" 
-              href={`?page=${currentPage + 1}`}
+              href={`?${new URLSearchParams({...Object.fromEntries(url.searchParams), page: currentPage + 1})}`}
               aria-label="Next"
             >
-              <span aria-hidden="true">&raquo;</span>
+              <span aria-hidden="true">»</span>
             </a>
           </li>
         </ul>
-      </nav>
-
-      <!-- Page info -->
-      <div class="text-center mt-2">
-        <small class="text-muted">
-          Showing {startIndex + 1} to {Math.min(startIndex + productsPerPage, filteredProducts.length)} of {filteredProducts.length} products
-        </small>
+        <!-- Page info -->
+        <div class="text-center mt-2">
+          <small class="text-muted">
+            Showing {startIndex} to {endIndex} of {total_count} products
+          </small>
+        </div>
       </div>
-      </div>
-
     </div>
   </main>
 </Layout>

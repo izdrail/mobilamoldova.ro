@@ -1,0 +1,170 @@
+---
+import Layout from '../layouts/Layout.astro';
+import data from '../../public/data.json';
+import '../../assets/scss/astro-ecommerce.scss';
+import Navbar from '../components/navbar';
+import CardProduct from '../components/products/cardProduct';
+
+
+///
+import { fetchProducts } from '../utils/api'; // Assume this function makes an API call to get filtered products
+
+// State management for filters
+let category = '';
+let subcategory = '';
+let minPrice = null;
+let maxPrice = null;
+let brand = '';
+
+// Pagination settings
+const productsPerPage = 20;
+let currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+
+// Function to handle filter changes
+const handleFilter = async (event) => {
+  event.preventDefault();
+  
+  const params = new URLSearchParams({
+    category,
+    subcategory,
+    min_price: minPrice,
+    max_price: maxPrice,
+    brand,
+    page: currentPage,
+    page_size: productsPerPage
+  });
+
+  // Here we would fetch new products based on the filter
+  const data = await fetchProducts(params.toString());
+  
+  // Update the products state with new data
+  filteredProducts = data.products;
+  totalCount = data.total_count;
+  totalPages = data.total_pages;
+};
+
+// Initial fetch of data or filtered data
+let filteredProducts = [];
+let totalCount = 0;
+let totalPages = 0;
+
+const initialLoad = async () => {
+  const params = new URLSearchParams(Astro.url.search);
+  const data = await fetchProducts(params.toString());
+  filteredProducts = data.products;
+  totalCount = data.total_count;
+  totalPages = data.total_pages;
+};
+
+await initialLoad();
+
+
+
+
+// Pagination settings
+
+// Ensure current page is within valid range
+if (currentPage < 1) currentPage = 1;
+if (currentPage > totalPages) currentPage = totalPages;
+
+// Calculate pagination ranges
+const startIndex = (currentPage - 1) * productsPerPage;
+const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+
+// Generate array of page numbers for pagination
+const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+---
+
+<Layout title="Produse - Magazin Mobila Moldova">
+  <main>
+    <Navbar />
+    <div class="container mt-5">
+      <header>
+        <h1 class="mb-4">
+          Produse - Magazin Mobila Moldova
+        </h1>
+        <h2>
+          Alegeti produsul de mobila preferat
+        </h2>
+      </header>
+
+      <section>
+        <div class="row">
+          <!-- Products -->
+          {paginatedProducts.map(product => 
+            <article class="col-lg-4">
+              <CardProduct 
+                title={product.title}
+                price={product.price}
+                description={product.description}
+                images={product.image_urls}
+              />
+            </article>
+          )}
+        </div>
+      </section>
+
+      <section class="container col-lg-12">
+        <!-- Pagination Controls -->
+        <nav aria-label="Product pagination" class="mt-4">
+          <ul class="pagination justify-content-center">
+            <!-- Previous button -->
+            <li class={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+              <a 
+                class="page-link" 
+                href={`?page=${currentPage - 1}`}
+                aria-label="Previous"
+              >
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+
+            <!-- Page numbers -->
+            {pageNumbers.map(pageNum => (
+              <li class={`page-item ${pageNum === currentPage ? 'active' : ''}`}>
+                <a 
+                  class="page-link" 
+                  href={`?page=${pageNum}`}
+                >
+                  {pageNum}
+                </a>
+              </li>
+            ))}
+
+            <!-- Next button -->
+            <li class={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+              <a 
+                class="page-link" 
+                href={`?page=${currentPage + 1}`}
+                aria-label="Next"
+              >
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Page info -->
+        <div class="text-center mt-2">
+          <small class="text-muted">
+            Showing {startIndex + 1} to {Math.min(startIndex + productsPerPage, filteredProducts.length)} of {filteredProducts.length} products
+          </small>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .pagination {
+    gap: 0.25rem;
+  }
+  .page-link {
+    border-radius: 4px;
+  }
+  .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+</style>

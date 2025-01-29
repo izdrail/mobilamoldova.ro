@@ -14,7 +14,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/backend': {
-        target: '//127.0.0.1:1501/',
+        target: 'http://127.0.0.1:1501/',
         secure: false,
         autoRewrite: true,
         changeOrigin: true,

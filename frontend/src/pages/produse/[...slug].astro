@@ -1,140 +1,79 @@
 ---
+import Layout from '../../layouts/Layout.astro';
 import { CollectionEntry, getCollection } from 'astro:content';
 
-
 interface Props {
-	entry: CollectionEntry<'blog'>;
+  entry: CollectionEntry<'produse'>;
 }
 
-
 export async function getStaticPaths() {
-	const blog = await getCollection('blog');
-	return blog.map((entry) => ({
-		params: { slug: entry.slug },
-		props: { entry },
-	}));
+  const produse = await getCollection('produse');
+  return produse.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.description}>
-	<div class="stack gap-20">
-		<div class="stack gap-15">
-			<header>
-				<div class="wrapper stack gap-2">
-					<a class="back-link" href="/books/"><Icon icon="arrow-left" /> Blog </a>
-					<Hero title={entry.data.title} align="center">
-						<div class="details">
-							<div class="tags">
-								{entry.data.tags.map((t) => <Pill>{t}</Pill>)}
-							</div>
-						</div>
-					</Hero>
-				</div>
-			</header>
-			<main class="wrapper">
-				<div class="stack ">
-					{entry.data.img && <img src={entry.data.img} alt={entry.data.img_alt || ''} />}
-					<div class="text-2xl">
-						<Content />
-					</div>
-				</div>
-			</main>
-		</div>
-	</div>
-</BaseLayout>
+<Layout title="Produse - Magazin Mobila Moldova">
+  <section class="py-8 bg-white md:py-16 dark:bg-gray-900">
+    <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+        <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
+          {entry.data.img && (
+            <img 
+              class="w-full" 
+              src={entry.data.img} 
+              alt={entry.data.title} 
+            />
+          )}
+        </div>
 
-<style>
-	header {
-		padding-bottom: 2.5rem;
-		border-bottom: 1px solid var(--gray-800);
-	}
+        <div class="mt-6 sm:mt-8 lg:mt-0">
+          <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+            {entry.data.title}
+          </h1>
+          
+          <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
+            <p class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
+              {entry.data.price} RON
+            </p>
+          </div>
 
-	.back-link {
-		display: none;
-	}
+          <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+            {entry.data.aff_code && (
+              <a
+                href={entry.data.aff_code}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-white bg-primary-700 hover:bg-primary-800 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center"
+              >
+                Cumpără Acum
+              </a>
+            )}
+            
+            {entry.data.url && (
+              <a
+                href={entry.data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center ml-2"
+              >
+                Vizualizează pe Site
+              </a>
+            )}
+          </div>
 
-	.details {
-		display: flex;
-		flex-direction: column;
-		padding: 0.5rem;
-		gap: 1.5rem;
-		justify-content: space-between;
-		align-items: center;
-	}
+          <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
-	.tags {
-		display: flex;
-		gap: 0.5rem;
-	}
-
-	.description {
-		font-size: var(--text-lg);
-		max-width: 54ch;
-	}
-
-	.content {
-		max-width: 75ch;
-		margin-inline: auto;
-	}
-
-	.content > :global(* + *) {
-		margin-top: 1rem;
-	}
-
-	.content :global(h1),
-	.content :global(h2),
-	.content :global(h3),
-	.content :global(h4),
-	.content :global(h5) {
-		margin: 1.5rem 0;
-	}
-
-	.content :global(img) {
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-sm);
-		background: var(--gradient-subtle);
-		border: 1px solid var(--gray-800);
-	}
-
-	.content :global(blockquote) {
-		font-size: var(--text-lg);
-		font-weight: 600;
-		line-height: 1.1;
-		padding-inline-start: 1.5rem;
-		border-inline-start: 0.25rem solid var(--accent-dark);
-		color: var(--gray-0);
-	}
-
-	.back-link,
-	.content :global(a) {
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
-	}
-
-	.back-link:hover,
-	.back-link:focus,
-	.content :global(a:hover),
-	.content :global(a:focus) {
-		text-decoration-color: currentColor;
-	}
-
-	@media (min-width: 50em) {
-		.back-link {
-			display: block;
-			align-self: flex-start;
-		}
-
-		.details {
-			flex-direction: row;
-			gap: 2.5rem;
-		}
-
-		.content :global(blockquote) {
-			font-size: var(--text-2xl);
-		}
-	}
-</style>
+          <div class="text-gray-500 dark:text-gray-400">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

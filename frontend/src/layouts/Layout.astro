@@ -1,4 +1,6 @@
 ---
+import Footer from '../components/complexFooter';
+
 // Types
 export interface Props {
   title: string;
@@ -9,24 +11,26 @@ export interface Props {
 // Props with defaults
 const { 
   title, 
-  description = "Mobila la comanda barlad. Explorează cea mai rafinată colecție de mobilier lucrat manual din Barlad.",
+  description = "Mobila la comanda Barlad. Explorează cea mai rafinată colecție de mobilier lucrat manual din Barlad.",
   canonicalUrl = "https://mobilamodova.ro/"
 } = Astro.props;
 
 // Environment variables
 const isDevelopment = import.meta.env.DEV;
-const gtmId = 'GTM-K2KSS7RX';
+const gtmId = 'G-YFZYSJ9QJM';
 
 // Navigation items
 const navigationItems = [
-  ['Acasa', '/'],
+  ['Despre', '/despre-noi'],
   ['Magazin', '/magazin'],
-  ['Dormitor', '/mobila-dormitor'],
-  ['Sufragerie', '/mobila-sufragerie'],
-  ['Paturi', '/paturi-la-comanda'],
-  ['Dulapuri', '/dulapuri-la-comanda'],
-  ['Recicleaza', '/recicleaza'],
-  ['Support', '/support']
+  ['Living', '/categorie/mobila-living'],
+  ['Dormitor', '/categorie/mobila-dormitor'],
+  ['Bucatarie', '/categorie/mobila-de-bucatarie'],
+  ['Copii', '/categorie/mobila-copii'],
+
+  ['Paturi', '/categorie/paturi'],
+  ['Birouri', '/categorie/birouri'],
+  ['Recicleaza', '/recicleaza']
 ];
 ---
 
@@ -56,7 +60,7 @@ const navigationItems = [
     />
     
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{title} - Mobilamoldova.ro</title>
     <link rel="canonical" href={canonicalUrl} />
 
     <!-- Google Tag Manager -->
@@ -84,8 +88,8 @@ const navigationItems = [
     )}
 
     <!-- Fixed Header -->
-    <div class="w-full border border-gray-100 dark:border-gray-800 rounded-lg fixed top-0 z-50 bg-white dark:bg-gray-800">
-      <header>
+    <div  class="w-full border rounded-lg fixed top-0 z-50 bg-dark dark:bg-gray-800 dark:text-white">
+      <header >
         <!-- Main Navigation -->
         <nav class="px-4 py-3 dark:border-gray-700 max-w-screen-2xl mx-auto">
           <div class="container mx-auto flex justify-between items-center">
@@ -96,7 +100,7 @@ const navigationItems = [
                 alt="Mobila Moldova Logo" 
                 class="h-8 w-auto"
               />
-              <span class="text-xl font-semibold dark:text-white">
+              <span class="text-xl font-semibold dark:text-white text-white">
                 Mobila Moldova
               </span>
             </a>
@@ -105,13 +109,13 @@ const navigationItems = [
             <div class="flex items-center gap-6">
               <a 
                 href="tel:+40370 701 874" 
-                class="hidden sm:inline text-sm font-medium text-gray-900 hover:text-primary-600 dark:text-white"
+                class="hidden sm:inline text-sm font-medium text-gray-900 hover:text-primary-600 text-white"
               >
                 (+40) 370 701 874
               </a>
               <a 
                 href="/contact" 
-                class="text-sm font-medium text-primary-600 hover:underline dark:text-white"
+                class="text-sm font-medium text-primary-600 hover:underline text-white"
               >
                 Contact
               </a>
@@ -140,8 +144,19 @@ const navigationItems = [
             <div class="flex lg:hidden items-center justify-between">
               <div class="flex gap-4">
                 <a href="/" class="text-sm hover:underline dark:text-white">Acasa</a>
-                <a href="/magazin" class="text-sm hover:underline dark:text-white">Magazin</a>
-                <a href="/mobila-dormitor" class="text-sm hover:underline dark:text-white">Dormitor</a>
+        
+                <ul class="hidden lg:flex gap-8 text-sm font-medium">
+                  {navigationItems.map(([label, href]) => (
+                    <li>
+                      <a 
+                        href={href}
+                        class="text-gray-700 hover:text-primary-600 dark:text-white dark:hover:text-primary-400 transition-colors"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
               <button
                 type="button"
@@ -172,6 +187,10 @@ const navigationItems = [
     <main >
       <slot />
     </main>
+
+    <!-- Footer -->
+    <Footer />
+
 
     <!-- Scripts -->
     <script 
