@@ -1,0 +1,25 @@
+{
+    "name": "laravelcompany/mobila",
+    "description": "",
+    "type": "laravel-module",
+    "authors": [
+        {
+            "name": "Stefan Bogdan"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Domain\\": ""
+        }
+    }
+}

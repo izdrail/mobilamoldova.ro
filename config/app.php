@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost:1600'),
 
     /*
     |--------------------------------------------------------------------------
@@ -85,11 +85,10 @@ return [
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
     'available_locales' => [
-        'ar' => 'العربی (AR)',
-        'bn' => 'বাংলা (BN)',
+
         'en' => 'English (EN)',
-        'fa' => 'فارسی (FA)',
-        'vi' => 'Vietnamese (VI)',
+        'ru' => 'Russian (RU)',
+        'zn' => 'Mandarin'
     ],
 
     /*

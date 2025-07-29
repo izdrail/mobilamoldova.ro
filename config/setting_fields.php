@@ -14,7 +14,7 @@ return [
                 'label' => 'App Name', // you know what label it is
                 'rules' => 'required|min:2|max:50', // validation rule of laravel
                 'class' => '', // any class for input
-                'value' => 'Laravel Starter', // default value if you want
+                'value' => 'Mobila Moldova', // default value if you want
             ],
             [
                 'type' => 'text', // input fields type
@@ -23,17 +23,9 @@ return [
                 'label' => 'App Description', // you know what label it is
                 'rules' => 'required', // validation rule of laravel
                 'class' => '', // any class for input
-                'value' => 'Laravel Starter is a CMS like modular starter application project built with Laravel. This starter project can be used as a foundation to build your own projects.', // default value if you want
+                'value' => 'Cumpara mobila la comanda la preturi de producator moldova.', // default value if you want
             ],
-            [
-                'type' => 'text', // input fields type
-                'data' => 'string', // data type, string, int, boolean
-                'name' => 'footer_text', // unique name for field
-                'label' => 'Footer Text', // you know what label it is
-                'rules' => 'required|min:2', // validation rule of laravel
-                'class' => '', // any class for input
-                'value' => '<a href="https://github.com/nasirkhan/laravel-starter/" class="text-muted">Built with ♥ from Bangladesh</a>', // default value if you want
-            ],
+
             [
                 'type' => 'checkbox', // input fields type
                 'data' => 'text', // data type, string, int, boolean
@@ -76,7 +68,7 @@ return [
                 'label' => 'Website URL', // you know what label it is
                 'rules' => 'nullable|max:191', // validation rule of laravel
                 'class' => '', // any class for input
-                'value' => 'https://nasirkhn.com', // default value if you want
+                'value' => 'https://mobilamoldova.ro', // default value if you want
             ],
             [
                 'type' => 'text', // input fields type
@@ -87,15 +79,7 @@ return [
                 'class' => '', // any class for input
                 'value' => '#', // default value if you want
             ],
-            [
-                'type' => 'text', // input fields type
-                'data' => 'string', // data type, string, int, boolean
-                'name' => 'twitter_url', // unique name for field
-                'label' => 'Twitter Profile URL', // you know what label it is
-                'rules' => 'nullable|max:191', // validation rule of laravel
-                'class' => '', // any class for input
-                'value' => 'https://twitter.com/nasirkhansaikat', // default value if you want
-            ],
+
             [
                 'type' => 'text', // input fields type
                 'data' => 'string', // data type, string, int, boolean
@@ -103,7 +87,7 @@ return [
                 'label' => 'Instagram Account URL', // you know what label it is
                 'rules' => 'nullable|max:191', // validation rule of laravel
                 'class' => '', // any class for input
-                'value' => 'https://www.instagram.com/nasirkhansaikat', // default value if you want
+                'value' => 'https://www.instagram.com/laravelcompany', // default value if you want
             ],
             [
                 'type' => 'text', // input fields type

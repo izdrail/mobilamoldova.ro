@@ -1,0 +1,13 @@
+{
+    "name": "Domain",
+    "alias": "domain",
+    "description": "Contains domain logic like business managers, agents etc",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Domain\\Providers\\DomainServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

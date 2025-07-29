@@ -1,0 +1,48 @@
+services:
+  mobilamoldova.ro:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WWWUSER: '${WWWUSER:-1000}'
+        WWWGROUP: '${WWWGROUP:-1000}'
+    image: izdrail/mobilamoldova.ro:latest
+    container_name: app.mobilamoldova.ro
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '1600:1600'
+      - '1601:1601'
+      - '2114:2114'
+    environment:
+      WWWUSER: '${WWWUSER}'
+      WWWGROUP: '${WWWGROUP}'
+      LARAVEL_SAIL: 1
+      IGNITION_LOCAL_SITES_PATH: '${PWD}'
+    volumes:
+      - '.:/var/www'
+    networks:
+      - sail
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql.mobilamoldova.ro
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: examplepassword  # Change this to a secure password
+      MYSQL_DATABASE: laravelmail
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravelpassword  # Change this to a secure password
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - sail
+
+volumes:
+  mysql_data:
+
+networks:
+  sail:
+    driver: bridge
