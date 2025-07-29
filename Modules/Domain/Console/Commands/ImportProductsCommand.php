@@ -5,6 +5,7 @@ namespace Modules\Domain\Console\Commands;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Domain\Imports\ProductsImport;
+use Modules\Domain\Imports\ProductsToPostsImporter;
 
 class ImportProductsCommand extends Command
 {
@@ -30,7 +31,7 @@ class ImportProductsCommand extends Command
     public function handle()
     {
 
-        Excel::import(new ProductsImport(), database_path('csv/feed.csv'));
+        Excel::import(new ProductsToPostsImporter(), database_path('csv/feed.csv'));
 
     }
 }
